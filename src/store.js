@@ -53,12 +53,12 @@ export default new Vuex.Store({
           q: query
         }
       }).then(res => {
-        commit('changeServiceList', res.data)
+        commit('changeServiceList', res.data.data)
       })
     },
     getPersonServiceList ({ commit }) {
       axios.get('/hotservices').then(res => {
-        commit('changeServiceList', res.data)
+        commit('changeServiceList', res.data.data)
       })
     }
   }

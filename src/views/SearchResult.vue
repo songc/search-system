@@ -1,22 +1,34 @@
 <template>
-  <div class="home">
-    <Row type="flex" justify="end">
-      <Col span="3">
-        <TheAvatar @on-login="login=true"></TheAvatar>
-      </Col>
-    </Row>
-    <img src="../assets/logo.png">
-    <Row type="flex" justify="center" align="top">
-      <Col span="8">
-        <TheSearch></TheSearch>
-      </Col>
-    </Row>
-    <Row type="flex" justify="center">
-      <Col span="8">
-        <Card dis-hover class="recommend">
-          <p slot="title">Hot Topic</p>
+  <div class="search">
+    <div class="search-bar">
+      <Row type="flex" align="middle">
+        <Col span="2">
+          <h2>SearchSer</h2>
+        </Col>
+        <Col span="7">
+          <TheSearch></TheSearch>
+        </Col>
+        <Col span="3" offset="12">
+          <TheAvatar @on-login="login=true"></TheAvatar>
+        </Col>
+      </Row>
+    </div>
+    <Row>
+      <Col span="12" offset="2">
+        <div class="search-result">
           <ServiceList :itemList="serviceList"></ServiceList>
-        </Card>
+        </div>
+      </Col>
+    </Row>
+    <Row>
+      <Col class="search-page" span="12" offset="2">
+        <Page
+          show-total
+          :current="number"
+          :total="total"
+          :page-size="size"
+          @on-change="changePageNum"
+        ></Page>
       </Col>
     </Row>
     <Modal v-model="login" title="Login in" ok-text='' cancel-text=''>
@@ -35,7 +47,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import TheSearch from '@/components/TheSearch.vue'
 import TheAvatar from '@/components/TheAvatar.vue'
 import TheLogin from '@/components/TheLogin'
@@ -43,7 +54,7 @@ import TheRegister from '@/components/TheRegister'
 import ServiceList from '@/components/ServiceList'
 
 export default {
-  name: 'home',
+  name: 'SearchResult',
   components: {
     TheSearch,
     TheAvatar,
@@ -54,11 +65,14 @@ export default {
   data () {
     return {
       login: false,
-      register: false
+      register: false,
+      number: 1,
+      total: 1,
+      size: 1
     }
   },
-  created: function () {
-    this.$store.dispatch('getPersonServiceList')
+  beforeCreate: function () {
+    this.$store.dispatch('getServiceList')
   },
   computed: {
     serviceList () {
@@ -69,12 +83,16 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  padding-top: 30px
+.search-bar {
+  padding-top: 30px;
+  min-height: 80px;
+  background-color: #f1ecec;
 }
-
-.recommend {
-  margin-top: 60px;
-  text-align: start
+.search-result {
+  margin-top: 30px;
+}
+.search-page {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>

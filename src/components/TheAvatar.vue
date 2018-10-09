@@ -14,7 +14,6 @@
     </div>
     <div v-else>
       <Button @click="login" size="small">Login in</Button>
-      <Button @click="register" size="small">Sign Up</Button>
     </div>
   </div>
 </template>
@@ -30,9 +29,6 @@ export default {
   methods: {
     login () {
       this.$emit('on-login')
-    },
-    register () {
-      this.$emit('on-register')
     }
   }
 }
