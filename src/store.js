@@ -21,17 +21,41 @@ export default new Vuex.Store({
       label: [],
       url: String
     },
-    serviceList: []
+    elasticRes: {
+      took: Number,
+      timed_out: false,
+      hits: {
+        total: Number,
+        max_score: Number,
+        hits: []
+      },
+      _shards: Object
+    }
+  },
+  getters: {
+    serviceList: state => {
+      return state.elasticRes.hits.hits.map(hit => {
+        let temp = {
+          id: hit._id,
+          score: hit._score,
+          title: hit._source.title[0],
+          keywords: hit._source.keywords,
+          url: hit._source.url
+        }
+        return temp
+      }
+      )
+    }
   },
   mutations: {
     changeLoginStatus (state, isLogin) {
       state.isLogin = isLogin
     },
-    changeServiceList (state, serviceList) {
-      state.serviceList = serviceList
-    },
     changeServiceItem (state, serviceItem) {
       state.serviceItem = serviceItem
+    },
+    changeElasticRes (state, res) {
+      state.elasticRes = res
     }
   },
   actions: {
@@ -48,17 +72,25 @@ export default new Vuex.Store({
       })
     },
     getServiceList ({ commit }, query) {
-      axios.get('/query', {
+      axios.get('/_search', {
         params: {
-          q: query
+          q: query,
+          size: 8,
+          from: 0
         }
       }).then(res => {
-        commit('changeServiceList', res.data.data)
+        commit('changeElasticRes', res.data)
       })
     },
-    getPersonServiceList ({ commit }) {
-      axios.get('/hotservices').then(res => {
-        commit('changeServiceList', res.data.data)
+    getPersonServiceList ({ commit }, query) {
+      axios.get('/_search', {
+        params: {
+          q: 'rest',
+          size: 6,
+          from: 0
+        }
+      }).then(res => {
+        commit('changeElasticRes', res.data)
       })
     }
   }

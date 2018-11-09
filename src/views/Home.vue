@@ -5,14 +5,14 @@
         <TheAvatar @on-login="login=true"></TheAvatar>
       </Col>
     </Row>
-    <img src="../assets/logo.png">
+    <router-link :to="{name:'home'}"><h1 class="home-title">Service Search</h1></router-link>
     <Row type="flex" justify="center" align="top">
       <Col span="8">
         <TheSearch></TheSearch>
       </Col>
     </Row>
     <Row type="flex" justify="center">
-      <Col span="8">
+      <Col span="12">
         <Card dis-hover class="recommend">
           <p slot="title">Hot Topic</p>
           <ServiceList :itemList="serviceList"></ServiceList>
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     serviceList () {
-      return this.$store.state.serviceList
+      return this.$store.getters.serviceList
     }
   }
 }
@@ -76,5 +76,10 @@ export default {
 .recommend {
   margin-top: 60px;
   text-align: start
+}
+
+.home-title {
+  margin-top: 100px;
+  margin-bottom: 40px;
 }
 </style>

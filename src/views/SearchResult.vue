@@ -2,32 +2,31 @@
   <div class="search">
     <div class="search-bar">
       <Row type="flex" align="middle">
-        <Col span="2">
-          <h2>SearchSer</h2>
+        <Col span="3">
+          <router-link :to="{name:'home'}"><h2>Service Search</h2></router-link>
         </Col>
         <Col span="7">
           <TheSearch></TheSearch>
         </Col>
-        <Col span="3" offset="12">
+        <Col span="3" offset="11">
           <TheAvatar @on-login="login=true"></TheAvatar>
         </Col>
       </Row>
     </div>
     <Row>
-      <Col span="12" offset="2">
+      <Col span="12" offset="3">
         <div class="search-result">
           <ServiceList :itemList="serviceList"></ServiceList>
         </div>
       </Col>
     </Row>
     <Row>
-      <Col class="search-page" span="12" offset="2">
+      <Col class="search-page" span="12" offset="3">
         <Page
           show-total
           :current="number"
           :total="total"
           :page-size="size"
-          @on-change="changePageNum"
         ></Page>
       </Col>
     </Row>
@@ -71,12 +70,9 @@ export default {
       size: 1
     }
   },
-  beforeCreate: function () {
-    this.$store.dispatch('getServiceList')
-  },
   computed: {
     serviceList () {
-      return this.$store.state.serviceList
+      return this.$store.getters.serviceList
     }
   }
 }

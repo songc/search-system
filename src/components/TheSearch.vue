@@ -19,11 +19,24 @@ export default {
       query: ''
     }
   },
+  mounted () {
+    for (let i in this.$route.query) {
+      this.query = this.$route.query.q
+    }
+  },
   methods: {
     sentQuery () {
       if (this.query !== '') {
         this.$store.dispatch('getServiceList', this.query)
-          .then(err => {
+          .then(res => {
+            this.$router.push({
+              name: 'search',
+              query: {
+                q: this.query
+              }
+            })
+          })
+          .catch(err => {
             this.$Message.error(err.message)
           })
       } else {
