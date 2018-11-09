@@ -6,6 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
+    login: false,
+    register: false,
     user: {
       id: 0,
       username: '',
@@ -56,6 +58,12 @@ export default new Vuex.Store({
     },
     changeElasticRes (state, res) {
       state.elasticRes = res
+    },
+    changeLogin (state, login) {
+      state.login = login
+    },
+    changeRegister (state, register) {
+      state.register = register
     }
   },
   actions: {

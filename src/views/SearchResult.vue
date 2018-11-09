@@ -9,7 +9,7 @@
           <TheSearch></TheSearch>
         </Col>
         <Col span="3" offset="11">
-          <TheAvatar @on-login="login=true"></TheAvatar>
+          <TheAvatar @on-login="login"></TheAvatar>
         </Col>
       </Row>
     </div>
@@ -30,18 +30,6 @@
         ></Page>
       </Col>
     </Row>
-    <Modal v-model="login" title="Login in" ok-text='' cancel-text=''>
-      <TheLogin @on-success="login=false"></TheLogin>
-      <div slot="footer">
-        <Button type="primary" long @click="login=false,register=true">New to The Site? Create Accout</Button>
-      </div>
-    </Modal>
-    <Modal v-model="register" title="register" ok-text='' cancel-text=''>
-      <TheRegister @on-success="register=false"></TheRegister>
-      <div slot="footer">
-        <Button type="primary" long @click="register=false,login=true">Have Account? Sign Up</Button>
-      </div>
-    </Modal>
   </div>
 </template>
 
@@ -74,6 +62,11 @@ export default {
     serviceList () {
       return this.$store.getters.serviceList
     }
+  },
+  methods: {
+    login () {
+      this.$store.commit('changeLogin', true)
+    }
   }
 }
 </script>
@@ -86,6 +79,7 @@ export default {
 }
 .search-result {
   margin-top: 30px;
+  text-align: start;
 }
 .search-page {
   margin-top: 20px;
