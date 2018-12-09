@@ -1,22 +1,27 @@
 <template>
-  <Card dis-hover class="serviceItem">
-    <p slot="title">
+  <div>
+    <Divider />
+    <div class="item title" @click="goDetail(item.id)">
       <Icon type="ios-list-box" />
       {{ item.title }}
-    </p>
-    <p slot="extra" target="_blank">
+    </div>
+    <p class="item score">
       <Icon type="md-podium" /> {{ item.score }}
     </p>
-    <p class="item-keyword">
+    <p class="item info">
       <Icon type="ios-pricetags" />
       {{ item.keywords }}
     </p>
-    <p>
+    <p class="item info">
+      <Icon type="ios-text"/>
+      {{ item.topics }}
+    </p>
+    <p class="item url">
       <a :href="item.url" target="_blank">
       <Icon type="ios-globe" size="24"/>
-    </a>
+      </a>
     </p>
-  </Card>
+  </div>
 </template>
 
 <script>
@@ -24,6 +29,19 @@ export default {
   name: 'ServiceItem',
   props: {
     item: Object
+  },
+  methods: {
+    goDetail (id) {
+      this.$store.dispatch('getRecommenderRes', id)
+        .then(res => {
+          this.$router.push({
+            name: 'service',
+            params: {
+              id: id
+            }
+          })
+        })
+    }
   }
 }
 </script>
@@ -34,7 +52,7 @@ export default {
   margin-bottom: 3px
 }
 
-.item-keyword {
+.item {
   margin: 20px;
 }
 </style>

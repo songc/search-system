@@ -51,8 +51,6 @@ export default {
   },
   data () {
     return {
-      login: false,
-      register: false,
       number: 1,
       total: 1,
       size: 1

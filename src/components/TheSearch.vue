@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted () {
-    for (let i in this.$route.query) {
+    if (Object.keys(this.$route.query).length !== 0) {
       this.query = this.$route.query.q
     }
   },

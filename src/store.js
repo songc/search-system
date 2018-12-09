@@ -32,6 +32,16 @@ export default new Vuex.Store({
         hits: []
       },
       _shards: Object
+    },
+    recommenderRes: {
+      took: Number,
+      timed_out: false,
+      hits: {
+        total: Number,
+        max_score: Number,
+        hits: []
+      },
+      _shards: Object
     }
   },
   getters: {
@@ -41,12 +51,31 @@ export default new Vuex.Store({
           id: hit._id,
           score: hit._score,
           title: hit._source.title[0],
+          clean_doc: hit._source.clean_doc,
+          clean_token: hit._source.clean_token,
           keywords: hit._source.keywords,
+          topics: hit._source.topics,
           url: hit._source.url
         }
         return temp
       }
       )
+    },
+    recommenderList: state => {
+      return state.recommenderRes.hits.hits.map(hit => {
+        let temp = {
+          id: hit._id,
+          score: hit._score,
+          raw_content: hit._source.raw_content,
+          title: hit._source.title[0],
+          clean_doc: hit._source.clean_doc,
+          clean_token: hit._source.clean_token,
+          keywords: hit._source.keywords,
+          topics: hit._source.topics,
+          url: hit._source.url
+        }
+        return temp
+      })
     }
   },
   mutations: {
@@ -64,6 +93,9 @@ export default new Vuex.Store({
     },
     changeRegister (state, register) {
       state.register = register
+    },
+    changeRecommenderRes (state, recommenderRes) {
+      state.recommenderRes = recommenderRes
     }
   },
   actions: {
@@ -99,6 +131,18 @@ export default new Vuex.Store({
         }
       }).then(res => {
         commit('changeElasticRes', res.data)
+      })
+    },
+    // TODO change the url and params
+    getRecommenderRes ({ commit }, id) {
+      axios.get('/_search', {
+        params: {
+          q: 'rest',
+          size: 5,
+          from: 0
+        }
+      }).then(res => {
+        commit('changeRecommenderRes', res.data)
       })
     }
   }
