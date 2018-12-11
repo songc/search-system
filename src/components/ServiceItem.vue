@@ -1,10 +1,10 @@
 <template>
   <div>
     <Divider />
-    <div class="item title" @click="goDetail(item.id)">
+    <Button class="title" type="text" @click="goDetail(item.id)">
       <Icon type="ios-list-box" />
       {{ item.title }}
-    </div>
+    </Button>
     <p class="item score">
       <Icon type="md-podium" /> {{ item.score }}
     </p>
@@ -54,5 +54,9 @@ export default {
 
 .item {
   margin: 20px;
+}
+
+.title {
+  font-size: 20px;
 }
 </style>

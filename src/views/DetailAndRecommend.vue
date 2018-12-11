@@ -13,8 +13,18 @@
         </Col>
       </Row>
     </div>
-    <ServiceDetail :item="targetService"></ServiceDetail>
-    <ServiceRecommender :serviceList="recommenderList"></ServiceRecommender>
+    <Row
+      class="reconmmender"
+      type="flex"
+      align="top"
+      justify="start">
+      <Col span="14" offset="2">
+        <ServiceDetail :item="targetService"></ServiceDetail>
+      </Col>
+      <Col span="6">
+        <ServiceRecommender :serviceList="recommenderList"></ServiceRecommender>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -47,14 +57,13 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .search-bar {
   padding-top: 30px;
   min-height: 80px;
   background-color: #f1ecec;
 }
-.search-result {
+.reconmmender {
   margin-top: 30px;
   text-align: start;
 }

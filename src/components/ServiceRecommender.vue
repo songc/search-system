@@ -1,8 +1,9 @@
 <template>
   <div>
+    <h1>Similary Services:</h1>
     <Collapse>
       <Panel v-for="item in serviceList" :key="item.id" :name="item.id">
-        {{item.title}}
+        {{item.title | substr }}
         <div slot="content">
           <p class="item info">
             <Icon type="ios-pricetags" />
@@ -26,6 +27,15 @@ export default {
   name: 'ServiceRecommender',
   props: {
     serviceList: Array
+  },
+  filters: {
+    substr: function (str) {
+      if (str.length < 45) {
+        return str
+      } else {
+        return str.substring(0, 45) + '...'
+      }
+    }
   },
   methods: {
     goDetail (id) {
