@@ -96,6 +96,9 @@ export default new Vuex.Store({
     },
     changeRecommenderRes (state, recommenderRes) {
       state.recommenderRes = recommenderRes
+    },
+    changeUser (state, user) {
+      state.user = user
     }
   },
   actions: {
@@ -112,22 +115,20 @@ export default new Vuex.Store({
       })
     },
     getServiceList ({ commit }, query) {
-      axios.get('/_search', {
+      axios.get('/query', {
         params: {
-          q: query,
-          size: 8,
-          from: 0
+          q: query.q,
+          size: query.size,
+          from: query.from
         }
       }).then(res => {
         commit('changeElasticRes', res.data)
       })
     },
-    getPersonServiceList ({ commit }, query) {
-      axios.get('/_search', {
+    getPersonServiceList ({ commit }, size) {
+      axios.get('/hottopic', {
         params: {
-          q: 'rest',
-          size: 6,
-          from: 0
+          size: size
         }
       }).then(res => {
         commit('changeElasticRes', res.data)
@@ -135,11 +136,10 @@ export default new Vuex.Store({
     },
     // TODO change the url and params
     getRecommenderRes ({ commit }, id) {
-      axios.get('/_search', {
+      axios.get('/sim', {
         params: {
-          q: 'rest',
-          size: 5,
-          from: 0
+          id: id,
+          size: 5
         }
       }).then(res => {
         commit('changeRecommenderRes', res.data)

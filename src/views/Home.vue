@@ -40,7 +40,7 @@ export default {
     ServiceList
   },
   created: function () {
-    this.$store.dispatch('getPersonServiceList')
+    this.$store.dispatch('getPersonServiceList', 5)
   },
   computed: {
     serviceList () {

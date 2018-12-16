@@ -27,15 +27,20 @@ export default {
   methods: {
     sentQuery () {
       if (this.query !== '') {
-        this.$store.dispatch('getServiceList', this.query)
-          .then(res => {
-            this.$router.push({
-              name: 'search',
-              query: {
-                q: this.query
-              }
-            })
+        this.$store.dispatch('getServiceList', {
+          q: this.query,
+          size: 8,
+          from: 0
+        }).then(res => {
+          this.$router.push({
+            name: 'search',
+            query: {
+              q: this.query,
+              size: 8,
+              from: 0
+            }
           })
+        })
           .catch(err => {
             this.$Message.error(err.message)
           })

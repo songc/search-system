@@ -27,6 +27,7 @@
           :current="number"
           :total="total"
           :page-size="size"
+          @on-change="changeNum"
         ></Page>
       </Col>
     </Row>
@@ -52,11 +53,16 @@ export default {
   data () {
     return {
       number: 1,
-      total: 1,
-      size: 1
+      size: 8
     }
   },
+  watch: {
+    'number': 'getRes'
+  },
   computed: {
+    total () {
+      return this.$store.state.elasticRes.hits.total
+    },
     serviceList () {
       return this.$store.getters.serviceList
     }
@@ -64,6 +70,28 @@ export default {
   methods: {
     login () {
       this.$store.commit('changeLogin', true)
+    },
+    changeNum (num) {
+      this.number = num
+    },
+    getRes () {
+      this.$store.dispatch('getServiceList', {
+        q: this.$route.query.q,
+        size: this.size,
+        from: this.number - 1
+      }).then(res => {
+        this.$router.push({
+          name: 'search',
+          query: {
+            q: this.$route.query.q,
+            size: 8,
+            from: this.number - 1
+          }
+        })
+      })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
     }
   }
 }

@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     targetService () {
-      return this.$store.getters.serviceList.find(x => x.id === this.$route.params.id)
+      return this.$store.getters.serviceList.find(x => x.id === this.$route.params.id) || this.$store.getters.recommenderList.find(x => x.id === this.$route.params.id)
     },
     recommenderList () {
       return this.$store.getters.recommenderList

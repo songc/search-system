@@ -29,6 +29,18 @@ export default {
   methods: {
     login () {
       this.$emit('on-login')
+    },
+    resolveClick(name) {
+      if (name === 'logout') {
+        this.$store.commit('changeLoginStatus', false)
+        this.$router.push({ name: 'home' })
+      }
+      if (name === 'setting') {
+        this.$router.push(`/user/${this.userId}/setting`)
+      }
+      if (name === 'profile') {
+        this.$router.push(`/user/${this.userId}/profile`)
+      }
     }
   }
 }
