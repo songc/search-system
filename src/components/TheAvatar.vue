@@ -30,7 +30,7 @@ export default {
     login () {
       this.$emit('on-login')
     },
-    resolveClick(name) {
+    resolveClick (name) {
       if (name === 'logout') {
         this.$store.commit('changeLoginStatus', false)
         this.$router.push({ name: 'home' })

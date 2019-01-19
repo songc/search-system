@@ -7,7 +7,7 @@
       v-model="item.clean_doc"
       type="textarea"
       :readonly="true"
-      :autosize="true"
+      :autosize="{minRows: 20, maxRows:50}"
       class="text"/>
     <p>
       <Button type="text" :to="item.url" target="_blank">
